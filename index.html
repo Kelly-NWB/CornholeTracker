@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Worm Raperz</title>
+<style>
+  :root {
+    --red: #b91c1c;
+    --blue: #1e3a8a;
+    --dark: #1f2937;
+    --cream: #f8f1e3;
+    --light: #fefce8;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #d8e0cc;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%237a8f5f' fill-opacity='0.055'%3E%3Crect x='10' y='15' width='45' height='70' rx='3'/%3E%3Ccircle cx='32' cy='45' r='8'/%3E%3Cpath d='M75 25 Q85 30 82 45 Q78 60 92 58' stroke='%237a8f5f' stroke-width='2' fill='none'/%3E%3Ccircle cx='78' cy='35' r='3'/%3E%3Ccircle cx='88' cy='42' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 110px 110px;
+    color: #1f2937;
+    margin: 0;
+    padding: 12px 12px 20px;
+    min-height: 100vh;
+  }
+
+  .banner {
+    width: 100%;
+    height: 160px;
+    background-image: url('banner.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin-bottom: 32px;
+  }
+
+  .banner-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #f4e9d8;
+    text-align: center;
+    padding: 0 20px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  }
+
+  .main-title {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 60px auto 0;
+    position: relative;
+    background: #f8f1e3;
+    border: 5px solid #1f2937;
+    border-radius: 10px;
+    box-shadow: 
+      0 8px 12px -2px rgb(0 0 0 / 0.18),
+      0 3px 5px -2px rgb(0 0 0 / 0.15),
+      inset 0 0 0 1px #fff;
+    overflow: hidden;
+    padding: 8px 6px 10px;
+  }
+
+  /* Tracer accent line */
+  .container::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(185, 28, 28, 0.15);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  .teams {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  @media (max-width: 620px) {
+    .teams {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+
+  .team {
+    background: white;
+    border: 3px solid #1f2937;
+    border-radius: 8px;
+    padding: 10px 8px;
+    box-shadow: 0 3px 6px -1px rgb(0 0 0 / 0.1);
+    text-align: center;
+  }
+
+  .team-label {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    padding: 3px 6px;
+    border-radius: 4px;
+    transition: background 0.1s;
+  }
+
+  .team-label:hover {
+    background: #f3e8d8;
+  }
+
+  .huckleberries { color: #1e3a8a; }
+  .hand-grenades { color: #b91c1c; }
+
+  .score {
+    font-size: 68px;
+    font-weight: 900;
+    line-height: 1;
+    margin: 2px 0 4px;
+  }
+
+  .huckleberries-score { color: #1e3a8a; }
+  .hand-grenades-score { color: #b91c1c; }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
+  button {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 8px 4px;
+    border: 2px solid #1f2937;
+    border-radius: 5px;
+    cursor: pointer;
+    background: white;
+    color: #1f2937;
+  }
+
+  button:active {
+    transform: scale(0.96);
+  }
+
+  .btn-plus {
+    background: #1e3a8a;
+    color: white;
+    border-color: #1e3a8a;
+  }
+
+  .team2 .btn-plus {
+    background: #b91c1c;
+    border-color: #b91c1c;
+  }
+
+  .btn-cornhole {
+    background: #1f2937;
+    color: #f4e9d8;
+    font-size: 12px;
+    line-height: 1.1;
+  }
+
+  .reset-btn {
+    margin: 8px auto 0;
+    background: #1f2937;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 7px 18px;
+    border: 2px solid #1f2937;
+    border-radius: 5px;
+    display: block;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 4px;
+    font-size: 10px;
+    color: #666;
+  }
+
+  .bottom-banner {
+    width: 100%;
+    height: 52px;
+    background: linear-gradient(to right, #1e3a8a, #b91c1c);
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .bottom-content {
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Win Popup (25% smaller) */
+  #win-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .win-box {
+    background: #f4e9d8;
+    max-width: 405px;
+    width: 92%;
+    border: 4px solid #1f2937;
+    border-radius: 10px;
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: 0 22px 45px -12px rgb(0 0 0 / 0.5);
+  }
+
+  .win-team {
+    font-size: 21px;
+    font-weight: 900;
+    color: #1f2937;
+    margin-bottom: 9px;
+  }
+
+  .win-image {
+    width: 100%;
+    max-height: 232px;
+    object-fit: contain;
+    border: 4px solid #b91c1c;
+    background: #f8f1e3;
+    padding: 4px;
+    margin: 6px 0 10px;
+    border-radius: 5px;
+  }
+
+  .sorry-text {
+    font-size: 16px;
+    font-weight: 900;
+    color: #9f1239;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .win-reset {
+    background: #1f2937;
+    color: white;
+    border: 2px solid #1f2937;
+    padding: 7px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <!-- Backyard Banner -->
+  <div class="banner">
+    <div class="banner-content">
+      <div class="main-title">Worm Raperz - Backyard Edition</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="teams">
+      <!-- Huckleberries -->
+      <div class="team">
+        <div class="team-label huckleberries" onclick="renameTeam(1)">THE HUCKLEBERRIES</div>
+        <div id="score1" class="score huckleberries-score">0</div>
+        <div class="buttons">
+          <button class="btn-plus" onclick="changeScore(1, 1)">+1</button>
+          <button class="btn-cornhole" onclick="changeScore(1, 3)">+3<br>CORNHOLE</button>
+        </div>
+      </div>
+
+      <!-- Hand Grenades -->
+      <div class="team">
+        <div class="team-label hand-grenades" onclick="renameTeam(2)">THE HAND GRENADES</div>
+        <div id="score2" class="score hand-grenades-score">0</div>
+        <div class="buttons">
+          <button class="btn-plus" onclick="changeScore(2, 1)">+1</button>
+          <button class="btn-cornhole" onclick="changeScore(2, 3)">+3<br>CORNHOLE</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="reset-btn" onclick="resetScores()">RESET THE BOARD</button>
+
+    <div class="footer">
+      Tap team names to rename
+    </div>
+  </div>
+
+  <!-- Bottom Banner -->
+  <div class="bottom-banner">
+    <div class="bottom-content">
+      <span class="bottom-text">Challenge the Titans</span>
+    </div>
+  </div>
+
+  <!-- Win Popup -->
+  <div id="win-popup">
+    <div class="win-box">
+      <div id="win-team" class="win-team"></div>
+      <img class="win-image" src="" alt="BIL">
+      <div class="sorry-text"></div>
+      <button class="win-reset" onclick="resetScores()">RESET THE BOARD</button>
+    </div>
+  </div>
+
+  <script>
+    let scores = {1: 0, 2: 0};
+    let teamNames = {1: "The Huckleberries", 2: "The Hand Grenades"};
+    let gameOver = false;
+
+    function save() {
+      try {
+        localStorage.setItem("wormRaperz", JSON.stringify({scores, teamNames}));
+      } catch(e){}
+    }
+
+    function load() {
+      try {
+        const data = JSON.parse(localStorage.getItem("wormRaperz") || "{}");
+        if (data.scores) scores = data.scores;
+        if (data.teamNames) teamNames = data.teamNames;
+      } catch(e){}
+    }
+
+    function update() {
+      document.getElementById("score1").textContent = scores[1];
+      document.getElementById("score2").textContent = scores[2];
+
+      const labels = document.querySelectorAll(".team-label");
+      labels[0].textContent = teamNames[1].toUpperCase();
+      labels[1].textContent = teamNames[2].toUpperCase();
+    }
+
+    function changeScore(team, delta) {
+      if (gameOver) return;
+      scores[team] = Math.max(0, scores[team] + delta);
+      update();
+      save();
+      checkWin();
+    }
+
+    function checkWin() {
+      if (scores[1] >= 21 || scores[2] >= 21) {
+        gameOver = true;
+        const winner = scores[1] >= 21 ? teamNames[1] : teamNames[2];
+        showWin(winner);
+      }
+    }
+
+    function showWin(winner) {
+      const popup = document.getElementById("win-popup");
+      document.getElementById("win-team").textContent = winner + " Win!";
+
+      // Random BIL image (bil1.jpg, bil2.png, bil3.png, bil.jpg etc.)
+      const bilImages = ["bil1.jpg", "bil2.png", "bil3.png", "bil.jpg"];
+      const randomImg = bilImages[Math.floor(Math.random() * bilImages.length)];
+      const img = document.querySelector(".win-image");
+      img.src = randomImg;
+
+      // Fallback if the random image does not exist
+      img.onerror = () => {
+        img.src = "bil.jpg";
+        img.onerror = null;
+      };
+
+      // Random funny/condescending insults
+      const insults = [
+        "Sorry Shelly... You lose...",
+        "Better luck next time, Shelly... or not.",
+        "Oof. Shelly really thought she had a chance.",
+        "Shelly, sweetie... that was embarrassing.",
+        "Don't worry Shelly, losing builds character... you must be very strong by now.",
+        "Shelly tried. Shelly failed. Classic.",
+        "That was painful to watch, Shelly.",
+        "Shelly, on behalf of everyone... yikes."
+      ];
+      document.querySelector(".sorry-text").textContent = 
+        insults[Math.floor(Math.random() * insults.length)];
+
+      popup.style.display = "flex";
+    }
+
+    function renameTeam(team) {
+      const current = teamNames[team];
+      const name = prompt("Rename team:", current);
+      if (name && name.trim()) {
+        teamNames[team] = name.trim();
+        update();
+        save();
+      }
+    }
+
+    function resetScores() {
+      scores = {1: 0, 2: 0};
+      gameOver = false;
+      document.getElementById("win-popup").style.display = "none";
+      update();
+      save();
+    }
+
+    // Keyboard
+    document.addEventListener("keydown", function(e) {
+      if (gameOver) {
+        if (e.key.toLowerCase() === "r") resetScores();
+        return;
+      }
+      if (e.key === "1") changeScore(1, 1);
+      if (e.key.toLowerCase() === "q") changeScore(1, 3);
+      if (e.key === "2") changeScore(2, 1);
+      if (e.key.toLowerCase() === "w") changeScore(2, 3);
+      if (e.key.toLowerCase() === "r") resetScores();
+    });
+
+    function init() {
+      load();
+      update();
+    }
+
+    init();
+  </script>
+</body>
+</html>
